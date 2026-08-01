@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
-import {
-  Inter,
-  Plus_Jakarta_Sans,
-  JetBrains_Mono,
-} from "next/font/google";
-
-import "./globals.css";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
+import "@/app/globals.css";
+import { Providers } from "@/app/providers";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { BackToTop } from "@/components/layout/back-to-top";
+import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { CookieConsent } from "@/components/layout/cookie-consent";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,54 +14,49 @@ const inter = Inter({
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-jakarta",
-  display: "swap",
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: {
-    default: "CodeAugs",
-    template: "%s | CodeAugs",
+    default: "CodeAugs edTech — Empowering Minds Through Code & Innovation",
+    template: "%s | CodeAugs edTech",
   },
-
   description:
-    "Building Africa's Next Generation of Software Engineers, AI Innovators and Technology Leaders.",
-
+    "Africa's premier EdTech platform providing high-impact education in Software Engineering, AI, Robotics, Cybersecurity, and Computer Science for learners, schools, and enterprises.",
   keywords: [
-    "Coding",
-    "Computer Science",
-    "Artificial Intelligence",
-    "Robotics",
-    "Programming",
-    "Cybersecurity",
+    "CodeAugs edTech",
+    "EdTech Africa",
+    "Coding for Kids",
     "Software Engineering",
-    "Web Development",
-    "Data Science",
-    "Mathematics",
-    "CodeAugs",
-    "Accra",
-    "Ghana",
+    "Artificial Intelligence",
+    "Robotics Education",
+    "Computer Science Ghana",
   ],
+  authors: [{ name: "CodeAugs edTech" }],
+  creator: "CodeAugs edTech",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://codeaugs.com",
+    title: "CodeAugs edTech — Empowering Minds Through Code & Innovation",
+    description:
+      "Transforming tech education across Africa with world-class programming, AI, and engineering curricula.",
+    siteName: "CodeAugs edTech",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CodeAugs edTech",
+    description:
+      "Transforming tech education across Africa with world-class programming, AI, and engineering curricula.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
-  authors: [
-    {
-      name: "CodeAugs",
-    },
-  ],
-
-  creator: "CodeAugs",
-
-  publisher: "CodeAugs",
-
-  metadataBase: new URL("https://codeaugs.com"),
+export const viewport: Viewport = {
+  themeColor: "#051329",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -69,12 +65,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${inter.variable} ${jakarta.variable} ${jetbrains.variable}`}
-    >
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
+      <body className="min-h-screen bg-[var(--bg-app)] text-[var(--fg-app)] font-sans antialiased selection:bg-[var(--blue-codeaugs)] selection:text-white flex flex-col">
+        <Providers>
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <BackToTop />
+          <WhatsAppButton />
+          <CookieConsent />
+        </Providers>
+      </body>
     </html>
   );
 }
